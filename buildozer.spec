@@ -18,6 +18,6 @@ warn_on_root = 1
  # A normal Kivy app cannot inject taps into another app. An Android
  # AccessibilityService/overlay companion is required for real camera pushes.
 android.api = 35
-android.minapi = 23
+android.minapi = 24
 android.archs = arm64-v8a, armeabi-v7a
 android.permissions = WAKE_LOCK, SYSTEM_ALERT_WINDOW
