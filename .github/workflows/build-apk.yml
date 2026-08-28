@@ -10,6 +10,11 @@ jobs:
       - name: Check out project
         uses: actions/checkout@v5
 
+      - name: Set up supported Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
       - name: Install Android build dependencies
         run: |
           sudo apt-get update
@@ -20,11 +25,11 @@ jobs:
 
       - name: Install Buildozer
         run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install buildozer cython==0.29.34
+          python -m pip install --upgrade pip
+          python -m pip install buildozer cython==0.29.34
 
       - name: Build debug APK
-        run: yes | buildozer android debug
+        run: yes | python -m buildozer android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
