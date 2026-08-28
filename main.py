@@ -120,10 +120,16 @@ class Crosshair(Widget):
     def _sync_tap(self, *_):
         self.tap_color.a = self.tap_alpha
 
-    def show_tap(self):
+    def begin_hold(self):
         Animation.cancel_all(self, "tap_alpha")
         self.tap_alpha = 0.85
-        Animation(tap_alpha=0, duration=0.45, t="out_quad").start(self)
+        hold_animation = Animation(tap_alpha=0.45, duration=0.7, t="in_out_sine") + Animation(tap_alpha=0.85, duration=0.7, t="in_out_sine")
+        hold_animation.repeat = True
+        hold_animation.start(self)
+
+    def end_hold(self):
+        Animation.cancel_all(self, "tap_alpha")
+        Animation(tap_alpha=0, duration=0.18, t="out_quad").start(self)
 
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
@@ -290,6 +296,7 @@ class IntervalometerRoot(FloatLayout):
             self._release_event.cancel()
         if self._clock_event:
             self._clock_event.cancel()
+        self.crosshair.end_hold()
         self._clear_highlights()
         self.status = "STOPPED / READY"
 
@@ -306,7 +313,7 @@ class IntervalometerRoot(FloatLayout):
         self.status = f"PRESSING {self.shot_count:02d} / TARGET HELD"
         self.count_text = f"{self.shot_count:02d} / {self.settings.number:02d}"
         self._highlight_field("exposure")
-        self.crosshair.show_tap()
+        self.crosshair.begin_hold()
         self._release_event = Clock.schedule_once(self._release_shot, self.settings.exposure)
         if self.shot_count >= self.settings.number:
             return
@@ -314,10 +321,12 @@ class IntervalometerRoot(FloatLayout):
 
     def _release_shot(self, *_):
         if self.running and self.shot_count < self.settings.number:
+            self.crosshair.end_hold()
             self._highlight_field("interval")
             self.status = f"WAITING / NEXT TAP IN {self.settings.interval:g} SEC"
         elif self.running:
             self.running = False
+            self.crosshair.end_hold()
             self._clear_highlights()
             self.status = "COMPLETE / SEQUENCE FINISHED"
             if self._clock_event:
