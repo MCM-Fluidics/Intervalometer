@@ -53,7 +53,7 @@ This project includes [`.github/workflows/build-apk.yml`](.github/workflows/buil
 4. When it finishes, open the workflow run and download `night-intervalometer-debug-apk` under **Artifacts**.
 5. Copy the downloaded APK to the phone and open it to install.
 
-The workflow pins its build Python to 3.12, avoiding the CPython 3.14 Android-wheel compatibility problem. It builds the APK on GitHub and avoids installing Android build tools on the PC.
+The workflow pins its build Python to 3.11 and pip to 24.3.1, avoiding known Python/pip compatibility problems in the Python-for-Android build chain. It builds the APK on GitHub and avoids installing Android build tools on the PC.
 
 For click-by-click beginner instructions, see [GITHUB_BEGINNER_GUIDE.md](GITHUB_BEGINNER_GUIDE.md).
 
