@@ -16,7 +16,7 @@ The default sequence is:
 
 The total updates while values are being edited. Empty, invalid, or too-small values are replaced with safe minimums when the sequence is started.
 
-During a sequence, the active field pulses softly in red: `DELAY` while waiting to start, `LONG` while the shutter target is held, and `INTERVAL` while waiting for the next press. The red crosshair also shows a brief translucent tap pulse for each simulated press.
+During a sequence, the active field pulses softly in red: `DELAY` while waiting to start, `LONG` while the shutter target is held, and `INTERVAL` while waiting for the next press. During the complete `LONG` hold, the red crosshair shows a continuous, gently breathing translucent ring. It fades when the simulated press is released.
 
 ## Run on a PC
 
@@ -53,7 +53,7 @@ This project includes [`.github/workflows/build-apk.yml`](.github/workflows/buil
 4. When it finishes, open the workflow run and download `night-intervalometer-debug-apk` under **Artifacts**.
 5. Copy the downloaded APK to the phone and open it to install.
 
-This builds the APK on GitHub and avoids installing Android build tools on the PC.
+The workflow pins its build Python to 3.12, avoiding the CPython 3.14 Android-wheel compatibility problem. It builds the APK on GitHub and avoids installing Android build tools on the PC.
 
 For click-by-click beginner instructions, see [GITHUB_BEGINNER_GUIDE.md](GITHUB_BEGINNER_GUIDE.md).
 
