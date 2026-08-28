@@ -37,7 +37,7 @@ jobs:
 
       - name: Build debug APK
         run: yes | python -m buildozer android debug
-
+ 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
