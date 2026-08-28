@@ -27,6 +27,13 @@ jobs:
         run: |
           python -m pip install pip==24.3.1
           python -m pip install buildozer cython==0.29.34
+          python --version
+          python -m pip --version
+          python -m buildozer --version
+
+      - name: Remove stale Android build output
+        run: |
+          rm -rf .buildozer bin
 
       - name: Build debug APK
         run: yes | python -m buildozer android debug
