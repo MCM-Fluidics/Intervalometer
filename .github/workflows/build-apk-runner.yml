@@ -51,10 +51,14 @@ jobs:
 
       - name: Run Buildozer (non-interactive)
         env:
-          # allow in-case buildozer detects root in some environments (defensive)
           BUILDOZER_ALLOW_ROOT: "1"
+          LDFLAGS: "-L/usr/local/lib"
+          LD_LIBRARY_PATH: "/usr/local/lib"
+          M4: "/usr/bin/m4"
         run: |
           . .venv/bin/activate
+          # Initialize libtool macros for autotools
+          libtoolize --install --force --verbose || true
           # Force non-interactive positive answers for any prompts
           yes y | buildozer -v android debug
 
