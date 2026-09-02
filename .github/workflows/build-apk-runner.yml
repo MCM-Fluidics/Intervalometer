@@ -48,6 +48,11 @@ jobs:
       - name: Clean previous build artifacts
         run: |
           rm -rf .buildozer bin || true
+     
+      - name: Initialize autotools and libtool macros
+        run: |
+          libtoolize --install --force --verbose
+          autoreconf --install --force --verbose || true
 
       - name: Run Buildozer (non-interactive)
         env:
@@ -57,8 +62,6 @@ jobs:
           M4: "/usr/bin/m4"
         run: |
           . .venv/bin/activate
-          # Initialize libtool macros for autotools
-          libtoolize --install --force --verbose || true
           # Force non-interactive positive answers for any prompts
           yes y | buildozer -v android debug
 
